@@ -25,7 +25,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // setup logging
 if (process.env.NODE_ENV !== 'test') {
-    require('./utils/listEndpoints')('/transfers', require('./routes/transfers').stack);
+    require('./utils/listEndpoints')('/examples', require('./routes/examples').stack);
 }
 
 app.use(mongooseConnection);
