@@ -1,0 +1,41 @@
+{
+  "name": "transfers",
+  "version": "1.0.0-alpha",
+  "private": true,
+  "scripts": {
+    "populate": "node ./scripts/populate",
+    "start": "node ./server.js",
+    "test": "mocha ./tests",
+    "coverage": "istanbul cover _mocha --report html -- tests/ -R spec"
+  },
+  "devDependencies": {
+    "chai": "^3.2.0",
+    "cli-table": "^0.3.1",
+    "grunt": "^0.4.5",
+    "grunt-apidoc": "^0.10.1",
+    "grunt-contrib-jshint": "^0.11.2",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-jscs": "^1.8.0",
+    "grunt-jsdoc": "^0.6.7",
+    "grunt-mocha-test": "^0.12.7",
+    "istanbul": "^0.3.22",
+    "load-grunt-tasks": "^3.1.0",
+    "mocha": "^2.2.5",
+    "sinon": "^1.14.1",
+    "supertest": "^1.0.1"
+  },
+  "dependencies": {
+    "body-parser": "^1.13.3",
+    "config": "^1.14.0",
+    "cors": "^2.7.1",
+    "errorhandler": "^1.4.1",
+    "express": "^4.13.3",
+    "lodash": "^3.10.1",
+    "mongoosastic": "^3.3.2",
+    "mongoose": "^4.1.1"
+  },
+  "engines": {
+    "node": "0.12.7",
+    "npm": "2.14.7"
+  }
+}
