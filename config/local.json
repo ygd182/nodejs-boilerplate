@@ -1,0 +1,13 @@
+{
+  "port": 3100,
+  "mongodb": {
+    "instances": [
+      {
+        "host": "localhost",
+        "port": 27017
+      }
+    ],
+    "db": "ceal",
+    "options": {}
+  }
+}
