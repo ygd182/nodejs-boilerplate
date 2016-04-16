@@ -5,8 +5,7 @@ var app = require('./app');
 
 // Mongo connection setup
 //db.connect(config);
-var uri = 'mongodb://localhost:27017';
-db.connect(uri);
+db.connect(app.get('dbUrl'));
 
 // Start Express
 var server = app.listen(app.get('port'), function() {

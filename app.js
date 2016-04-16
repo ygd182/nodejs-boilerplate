@@ -31,6 +31,13 @@ if (process.env.NODE_ENV !== 'test') {
 app.use(mongooseConnection);
 app.use('/', require('./routes'));
 
+
+// =============================================================================
+// db CONFIGURATION
+// =============================================================================
+var dbUrl = 'mongodb://' + config.mongodb.instances[0].host + ':' + config.mongodb.instances[0].host;
+app.set('dbUrl', dbUrl);
+
 /////////////////////////////////////////////////////////////////////////////////
 module.exports = app;
 
