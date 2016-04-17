@@ -2,20 +2,26 @@ var mongoose = require('mongoose');
 var mongoosastic = require('mongoosastic');
 var Schema =  mongoose.Schema;
 
+var logSchema = new Schema({ 
+	start: 'Date',
+	end: 'Date',
+	active: 'Boolean',
+	onTime: 'Boolean'
+ });
+
 /* Schema definition */
-var ExampleSchema = new Schema({
-    eid: String,
-    details: {
-        status: String
-    }
+var WellSchema = new Schema({
+    id: String,
+    info: String,
+    history: [logSchema]
 });
 /* Add search API through ES */
-ExampleSchema.plugin(mongoosastic);
+WellSchema.plugin(mongoosastic);
 
 /*
  *  Get details by a given eid
  */
-ExampleSchema.statics.getDetailsById = function (eid, cb){
+WellSchema.statics.getDetailsById = function (eid, cb){
     this.findOne({
         eid: eid
     }, 'details -_id').exec(cb);
@@ -24,8 +30,8 @@ ExampleSchema.statics.getDetailsById = function (eid, cb){
 /*
 * Excludes details information when retrieving all transfers
 */
-ExampleSchema.statics.getAll = function(cb) {
+WellSchema.statics.getAll = function(cb) {
    this.find({}, '-details').exec(cb);
 };
 
-module.exports = mongoose.model('ExampleSchema', ExampleSchema);
+module.exports = mongoose.model('WellSchema', WellSchema);

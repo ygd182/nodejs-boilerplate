@@ -1,10 +1,12 @@
 {
     "response": {
         "status": "OK",
-        "examples": [
+        "wells": [
             {
-                "eid": "01013304004814417161557391123100834",
-                "status": "1"
+                "id": "1",
+                "info": "torre tanque",
+                "status": "1",
+                "logs": []
             }
         ]
     }
