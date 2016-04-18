@@ -21,6 +21,46 @@ var WellController = require('../controllers/WellController');
 router.get('/', WellController.getAll);
 
 /**
+ * @api {get} /wells/:id get well by id
+ * @apiName wells
+ * @apiGroup System
+ *
+ * @apiSuccess {Object} result
+ * @apiSuccess {String}   result.status    The well object.
+ */
+router.get('/:id', WellController.getById);
+
+/**
+ * @api {put} /wells/:id get well by id
+ * @apiName wells
+ * @apiGroup System
+ *
+ * @apiSuccess {Object} result
+ * @apiSuccess {String}   result.status    The well object.
+ */
+router.put('/:id', WellController.updateById);
+
+/**
+ * @api {delete} /wells/:id get well by id
+ * @apiName wells
+ * @apiGroup System
+ *
+ * @apiSuccess {Object} result
+ * @apiSuccess {String}   result.status    The well object.
+ */
+router.delete('/:id', WellController.deleteById);
+
+/**
+ * @api {post} /wells/:id get well by id
+ * @apiName wells
+ * @apiGroup System
+ *
+ * @apiSuccess {Object} result
+ * @apiSuccess {String}   result.status    The well object.
+ */
+router.post('/:id', WellController.save);
+
+/**
  * @api {get} /wells/:id/status/:date get status by well's id
  * @apiName wells
  * @apiGroup System

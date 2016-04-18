@@ -2,18 +2,24 @@ var mongoose = require('mongoose');
 var mongoosastic = require('mongoosastic');
 var Schema =  mongoose.Schema;
 
-var logSchema = new Schema({ 
+var StatusSchema = new Schema({ 
+	checkTime: 'Date',
+	active: 'Boolean',
+	onTime: 'Boolean'
+ });
+
+var RulesSchema = new Schema({ 
 	start: 'Date',
 	end: 'Date',
+	repeat: 'Number',
 	active: 'Boolean',
 	onTime: 'Boolean'
  });
 
 /* Schema definition */
 var WellSchema = new Schema({
-    id: String,
     info: String,
-    history: [logSchema]
+    logs: [StatusSchema]
 });
 /* Add search API through ES */
 WellSchema.plugin(mongoosastic);
@@ -21,17 +27,23 @@ WellSchema.plugin(mongoosastic);
 /*
  *  Get details by a given eid
  */
-WellSchema.statics.getDetailsById = function (eid, cb){
+WellSchema.statics.getStatusByDate = function (id, date, cb) {
     this.findOne({
-        eid: eid
-    }, 'details -_id').exec(cb);
+        id: id
+    }, 'logs -_id').exec(cb);
 };
 
 /*
 * Excludes details information when retrieving all transfers
 */
 WellSchema.statics.getAll = function(cb) {
-   this.find({}, '-details').exec(cb);
+   this.find({}, '-logs').exec(cb);
+};
+
+WellSchema.statics.getById = function (id, cb) {
+	this.findOne({
+        _id: id
+    }).exec(cb);
 };
 
 module.exports = mongoose.model('WellSchema', WellSchema);

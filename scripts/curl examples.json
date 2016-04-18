@@ -1,0 +1,3 @@
+curl -H "Content-Type: application/json" -X POST -d '{"info": "pozo nro1"}' http://localhost:3100/wells/
+
+curl -X "DELETE" http://localhost:3100/wells/571418b75e0a56c00b6792ae
