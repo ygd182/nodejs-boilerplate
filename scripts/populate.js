@@ -24,7 +24,6 @@ function loadData(){
 _.each(parsedData.response.wells, function (parsed) {
 
     var example = new WellModel({
-        id: parsed.id,
         info: parsed.info,
         logs: parsed.logs
     });

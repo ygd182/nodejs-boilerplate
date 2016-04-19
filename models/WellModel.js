@@ -37,13 +37,13 @@ WellSchema.statics.getStatusByDate = function (id, date, cb) {
 * Excludes details information when retrieving all transfers
 */
 WellSchema.statics.getAll = function(cb) {
-   this.find({}, '-logs').exec(cb);
+   this.find({}, '-logs -__v').exec(cb);
 };
 
 WellSchema.statics.getById = function (id, cb) {
 	this.findOne({
         _id: id
-    }).exec(cb);
+    }, '-__v').exec(cb);
 };
 
 module.exports = mongoose.model('WellSchema', WellSchema);

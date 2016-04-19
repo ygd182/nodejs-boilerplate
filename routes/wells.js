@@ -58,7 +58,7 @@ router.delete('/:id', WellController.deleteById);
  * @apiSuccess {Object} result
  * @apiSuccess {String}   result.status    The well object.
  */
-router.post('/:id', WellController.save);
+router.post('/', WellController.save);
 
 /**
  * @api {get} /wells/:id/status/:date get status by well's id
