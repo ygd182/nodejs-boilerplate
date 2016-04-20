@@ -1,3 +1,7 @@
 curl -H "Content-Type: application/json" -X POST -d '{"info": "pozo nro1"}' http://localhost:3100/wells/
 
-curl -X "DELETE" http://localhost:3100/wells/571418b75e0a56c00b6792ae
+curl -X "DELETE" http://localhost:3100/wells/571579046031bf66332739e1
+
+//status
+
+curl -H "Content-Type: application/json" -X POST -d '{"checkTime": "July 8th, 2007, 10:30 PM", "active": "true"}' http://localhost:3100/wells/Pozo1/status/

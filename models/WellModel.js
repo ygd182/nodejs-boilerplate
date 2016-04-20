@@ -18,6 +18,10 @@ var RulesSchema = new Schema({
 
 /* Schema definition */
 var WellSchema = new Schema({
+	id: {
+        type: String,
+        required: true
+    },
     info: String,
     logs: [StatusSchema]
 });
@@ -30,20 +34,20 @@ WellSchema.plugin(mongoosastic);
 WellSchema.statics.getStatusByDate = function (id, date, cb) {
     this.findOne({
         id: id
-    }, 'logs -_id').exec(cb);
+    }, '-_id').exec(cb);
 };
 
 /*
 * Excludes details information when retrieving all transfers
 */
 WellSchema.statics.getAll = function(cb) {
-   this.find({}, '-logs -__v').exec(cb);
+   this.find({}, '-_id -__v').exec(cb);
 };
 
 WellSchema.statics.getById = function (id, cb) {
 	this.findOne({
-        _id: id
-    }, '-__v').exec(cb);
+        id: id
+    }, '-_id -__v').exec(cb);
 };
 
 module.exports = mongoose.model('WellSchema', WellSchema);

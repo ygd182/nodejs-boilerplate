@@ -3,6 +3,7 @@
         "status": "OK",
         "wells": [
             {
+                "id": "Pozo1",
                 "info": "torre tanque",
                 "logs": []
             }

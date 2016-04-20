@@ -70,6 +70,16 @@ router.post('/', WellController.save);
  */
 router.get('/:id/status/:date', WellController.getStatusByDate);
 
+/**
+ * @api {get} /wells/:id/status/:date get status by well's id
+ * @apiName wells
+ * @apiGroup System
+ *
+ * @apiSuccess {Object} result
+ * @apiSuccess {String}   result.status    The status object.
+ */
+router.post('/:id/status/', WellController.updateStatusById);
+
 
 
 module.exports = router;

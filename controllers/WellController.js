@@ -54,7 +54,7 @@ exports.getById = function getById(req, res, next) {
  *  @returns {Object} details object
  */
 exports.deleteById = function deleteById(req, res, next) {
-    var query = {_id: req.params.id};
+    var query = {id: req.params.id};
     WellModel.remove(query, function(err, data){
         if (err) return res.status(400).json({error: err});
 
@@ -74,7 +74,7 @@ exports.deleteById = function deleteById(req, res, next) {
  *  @returns {Object} details object
  */
 exports.updateById = function updateById(req, res, next) {
-    var query = {_id: req.params.id};
+    var query = {id: req.params.id};
     WellModel.findOneAndUpdate(query, req.body, function(err, activity) {
         if (err) {
             return res.status(400).json({error: err});
@@ -121,5 +121,31 @@ exports.getStatusByDate = function getStatusByDate(req, res, next) {
         if (err) return next(err);
 
         res.json(data);
+    });
+};
+
+/**
+ *  Get Well by id
+ *
+ *  @method
+ *  @memberOf Wellcontroller
+ *  @param {Object} req request object
+ *  @param {Object} res response object
+ *  @param {Object} next next function
+ *  @returns {Object} details object
+ */
+exports.updateStatusById = function updateStatusById(req, res, next) {
+    var query = {id: req.params.id};
+    WellModel.findOne(req.params.id, function(err, data){
+        if (err) return res.status(400).json({error: err});
+
+        //TODO validations, ontime check
+        req.body.onTime = true;
+        data.logs.push(req.body);
+        data.save(function (err, data) {
+            if (err) return res.status(400).json({error: err});
+
+            res.json(data);
+        });
     });
 };
