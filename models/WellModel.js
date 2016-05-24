@@ -10,10 +10,8 @@ var StatusSchema = new Schema({
 
 var RulesSchema = new Schema({ 
 	start: 'Date',
-	end: 'Date',
-	repeat: 'Number',
-	active: 'Boolean',
-	onTime: 'Boolean'
+	end: 'Date'/*,
+	active: 'Boolean'*/
  });
 
 /* Schema definition */
@@ -23,7 +21,8 @@ var WellSchema = new Schema({
         required: true
     },
     info: String,
-    logs: [StatusSchema]
+    logs: [StatusSchema],
+    rules: [RulesSchema]
 });
 /* Add search API through ES */
 WellSchema.plugin(mongoosastic);
