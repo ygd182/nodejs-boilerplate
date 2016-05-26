@@ -41,7 +41,7 @@ WellSchema.statics.getStatusByDate = function (id, date, cb) {
 * Excludes details information when retrieving all transfers
 */
 WellSchema.statics.getAll = function(cb) {
-   this.find({}, '-_id -__v').exec(cb);
+   this.find({}, '-_id -__v -logs').exec(cb);
 };
 
 WellSchema.statics.getById = function (id, cb) {
