@@ -9,9 +9,9 @@ var StatusSchema = new Schema({
  });
 
 var RulesSchema = new Schema({ 
-	start: 'Date',
-	end: 'Date'/*,
-	active: 'Boolean'*/
+	start: 'String',
+	end: 'String'/*,
+	active: 'Boolean' it is suposed to be on otherwise off*/
  });
 
 /* Schema definition */
