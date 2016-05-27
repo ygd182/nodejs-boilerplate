@@ -2,6 +2,7 @@
 
 var map = require('lodash/collection/map');
 var pick = require('lodash/object/pick');
+var _ = require('lodash');
 
 var WellModel = require('../models/WellModel');
 
@@ -124,6 +125,25 @@ exports.getStatusByDate = function getStatusByDate(req, res, next) {
     });
 };
 
+function onTimestatus() {
+
+}
+
+function stringTimeToInt(stringTime) {
+    return _.parseInt(stringTime.replace(/:/g, ''));
+}
+
+function findRuleByCheckTime(rules, currentCheckTime) {
+    _.find(rules, function findByTime(rule) {
+        return (stringTimeToInt(rule.checkTime.start) <= currentCheckTime && stringTimeToInt(rule.checkTime.end) >= currentCheckTime);
+    });
+}
+
+function isErrorStatus(rules, active, currentCheckTime) {
+    var expectedActive = findRuleByCheckTime(rules, currentCheckTime);
+    return expectedActive === active;
+}
+
 /**
  *  Get Well by id
  *
@@ -140,7 +160,12 @@ exports.updateStatusById = function updateStatusById(req, res, next) {
         if (err) return res.status(400).json({error: err});
 
         //TODO validations, ontime check
-        req.body.onTime = true;
+        /* estos valores llegan
+        req.body.cause
+        req.body.active
+        req.body.checkTime*/
+        req.body.onTime = true; // si ultimo checktime-actual checktime <= 15min?
+        req.body.error = /*isErrorStatus(ata.rules, req.body.active, req.body.checkTime)*/false; // si esta activo cuando se esperaba inactivo
         data.logs.push(req.body);
         data.save(function (err, data) {
             if (err) return res.status(400).json({error: err});

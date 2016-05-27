@@ -4,8 +4,10 @@ var Schema =  mongoose.Schema;
 
 var StatusSchema = new Schema({ 
 	checkTime: 'Date',
+    cause: 'String',
 	active: 'Boolean',
-	onTime: 'Boolean'
+	onTime: 'Boolean',
+    error: 'Boolean'
  });
 
 var RulesSchema = new Schema({ 
