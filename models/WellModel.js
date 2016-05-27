@@ -3,17 +3,17 @@ var mongoosastic = require('mongoosastic');
 var Schema =  mongoose.Schema;
 
 var StatusSchema = new Schema({ 
-	checkTime: 'Date',
-    cause: 'String',
-	active: 'Boolean',
-	onTime: 'Boolean',
-    error: 'Boolean'
+	checkTime: Date,
+    cause: String,
+	active: Boolean,
+	onTime: Boolean,
+    error: Boolean
  });
 
 var RulesSchema = new Schema({ 
-	start: 'String',
-	end: 'String'/*,
-	active: 'Boolean' it is suposed to be on otherwise off*/
+	start: String,
+	end: String/*,
+	active: Boolean it is suposed to be on otherwise off*/
  });
 
 /* Schema definition */
@@ -22,10 +22,18 @@ var WellSchema = new Schema({
         type: String,
         required: true
     },
+    enabled: Boolean,
     info: String,
+    address: {
+        x: Number, 
+        y: Number,
+        street: String,
+        number: String
+    },
     logs: [StatusSchema],
     rules: [RulesSchema]
 });
+
 /* Add search API through ES */
 WellSchema.plugin(mongoosastic);
 
