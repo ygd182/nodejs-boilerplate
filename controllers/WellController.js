@@ -3,6 +3,7 @@
 var map = require('lodash/collection/map');
 var pick = require('lodash/object/pick');
 var _ = require('lodash');
+var moment = require('moment');
 
 var WellModel = require('../models/WellModel');
 
@@ -129,20 +130,50 @@ function onTimestatus() {
 
 }
 
+function getHoursAndMinsFromDate(dateTime) {
+    var auxDateTime = new moment(dateTime).format('HH:mm');
+    return stringTimeToInt(auxDateTime);
+}
+
 function stringTimeToInt(stringTime) {
     return _.parseInt(stringTime.replace(/:/g, ''));
 }
 
-function findRuleByCheckTime(rules, currentCheckTime) {
-    _.find(rules, function findByTime(rule) {
-        return (stringTimeToInt(rule.checkTime.start) <= currentCheckTime && stringTimeToInt(rule.checkTime.end) >= currentCheckTime);
+function existsRuleByCheckTime(rules, currentCheckTime) {
+    var index =_.findIndex(rules, function findByTime(rule) {
+        return (stringTimeToInt(rule.start) <= getHoursAndMinsFromDate(currentCheckTime) && stringTimeToInt(rule.end) >= getHoursAndMinsFromDate(currentCheckTime));
     });
+    return (-1!==index);
 }
 
 function isErrorStatus(rules, active, currentCheckTime) {
-    var expectedActive = findRuleByCheckTime(rules, currentCheckTime);
-    return expectedActive === active;
+    var existActiveRule = existsRuleByCheckTime(rules, currentCheckTime);
+    return existActiveRule != active;
 }
+/*
+si encontro tiene que ser active
+si no encontro tiene que ser non active
+*//*
+var rules= [
+{
+end: "07:59",
+start: "00:00",
+_id: "5747a35822d56c5916954319"
+},
+{
+end: "23:59",
+start: "16:00",
+_id: "5747a35822d56c5916954318"
+}
+];
+
+
+console.log('sin error'+isErrorStatus(rules, true, '2014-01-01T01:18'));
+console.log('error'+isErrorStatus(rules, true, '2014-01-01T09:30'));
+console.log('sin error'+isErrorStatus(rules, true, '2014-01-01T16:30'));
+console.log('error'+isErrorStatus(rules, false, '2014-01-01T17:30'));*/
+
+
 
 /**
  *  Get Well by id
@@ -165,7 +196,7 @@ exports.updateStatusById = function updateStatusById(req, res, next) {
         req.body.active
         req.body.checkTime*/
         req.body.onTime = true; // si ultimo checktime-actual checktime <= 15min?
-        req.body.error = /*isErrorStatus(ata.rules, req.body.active, req.body.checkTime)*/false; // si esta activo cuando se esperaba inactivo
+        req.body.isError = isErrorStatus(data.rules, JSON.parse(req.body.active), req.body.checktime);
         data.logs.push(req.body);
         data.save(function (err, data) {
             if (err) return res.status(400).json({error: err});

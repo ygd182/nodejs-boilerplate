@@ -3,11 +3,11 @@ var mongoosastic = require('mongoosastic');
 var Schema =  mongoose.Schema;
 
 var StatusSchema = new Schema({ 
-	checkTime: Date,
+	checkTime: String,
     cause: String,
 	active: Boolean,
 	onTime: Boolean,
-    error: Boolean
+    isError: Boolean
  });
 
 var RulesSchema = new Schema({ 
