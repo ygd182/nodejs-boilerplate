@@ -26,7 +26,10 @@ _.each(parsedData.response.wells, function (parsed) {
     var example = new WellModel({
         id: parsed.id,
         info: parsed.info,
-        logs: parsed.logs
+        logs: parsed.logs,
+        enabled: parsed.enabled,
+        address: parsed.address,
+        rules: parsed.rules
     });
 
     example.save(function () {

@@ -35,8 +35,8 @@ app.use('/', require('./routes'));
 // =============================================================================
 // db CONFIGURATION
 // =============================================================================
-console.log(config);
-var dbUrl = 'mongodb://' + config.mongodb.instances[0].host + ':' + config.mongodb.instances[0].host;
+//console.log(config.mongodb.instances[0].host + '---' + config.mongodb.instances[0].port  );
+var dbUrl = 'mongodb://' + config.mongodb.instances[0].host + ':' + config.mongodb.instances[0].port + '/' + config.mongodb.db;
 console.log('dbUrl: ' + dbUrl)
 app.set('dbUrl', dbUrl);
 
