@@ -1,6 +1,6 @@
 {
-  "name": "transfers",
-  "version": "1.0.0-alpha",
+  "name": "ceal wells",
+  "version": "0.0.1",
   "private": true,
   "scripts": {
     "populate": "node ./scripts/populate",
@@ -38,6 +38,6 @@
   },
   "engines": {
     "node": "0.12.7",
-    "npm": "2.14.7"
+    "npm": "3.9.5"
   }
 }
