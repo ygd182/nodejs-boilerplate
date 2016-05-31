@@ -25,7 +25,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // setup logging
 if (process.env.NODE_ENV !== 'test') {
-    require('./utils/listEndpoints')('/examples', require('./routes/examples').stack);
+    require('./utils/listEndpoints')('/wells', require('./routes/wells').stack);
 }
 
 app.use(mongooseConnection);
@@ -35,7 +35,9 @@ app.use('/', require('./routes'));
 // =============================================================================
 // db CONFIGURATION
 // =============================================================================
-var dbUrl = 'mongodb://' + config.mongodb.instances[0].host + ':' + config.mongodb.instances[0].host;
+//console.log(config.mongodb.instances[0].host + '---' + config.mongodb.instances[0].port  );
+var dbUrl = 'mongodb://' + config.mongodb.instances[0].host + ':' + config.mongodb.instances[0].port + '/' + config.mongodb.db;
+console.log('dbUrl: ' + dbUrl)
 app.set('dbUrl', dbUrl);
 
 /////////////////////////////////////////////////////////////////////////////////

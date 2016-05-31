@@ -2,7 +2,7 @@ var fs = require('fs');
 var _ = require('lodash');
 var config = require('config');
 var db = require('mongoose');
-var ExampleModel = require('../models/ExampleModel');
+var WellModel = require('../models/WellModel');
 var app = require('../app');
 
 
@@ -21,13 +21,15 @@ db.connect(app.get('dbUrl'), function(e){
 function loadData(){
     var parsedData = JSON.parse(fs.readFileSync('scripts/mock.json'));
     console.log(parsedData)
-_.each(parsedData.response.examples, function (parsed) {
+_.each(parsedData.response.wells, function (parsed) {
 
-    var example = new ExampleModel({
-        eid: parsed.eid,
-        details: {
-            status: parsed.status
-        }
+    var example = new WellModel({
+        id: parsed.id,
+        info: parsed.info,
+        logs: parsed.logs,
+        enabled: parsed.enabled,
+        address: parsed.address,
+        rules: parsed.rules
     });
 
     example.save(function () {
@@ -43,7 +45,7 @@ _.each(parsedData.response.examples, function (parsed) {
 
 
 function checkDisconnect (i, parsedData) {
-    if (i === parsedData.response.examples.length) {
+    if (i === parsedData.response.wells.length) {
         console.log('Finished saving and indexing mocks documents');
         db.disconnect();
     }

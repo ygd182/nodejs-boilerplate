@@ -5,6 +5,6 @@
 var router = require('express').Router();
 
 // Routes are seperated into modules
-router.use('/examples', require('./examples'));
+router.use('/wells', require('./wells'));
 
 module.exports = router;

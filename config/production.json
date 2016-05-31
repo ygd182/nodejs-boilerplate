@@ -1,13 +1,13 @@
 {
-  "port": 80,
+  "port": 8080,
   "mongodb": {
     "instances": [
       {
-        "host": "localhost",
-        "port": 27017
+        "host": "admin:ceal@ds033915.mlab.com",
+        "port": 33915
       }
     ],
-    "db": "examples",
+    "db": "ceal",
     "options": {}
   }
 }
