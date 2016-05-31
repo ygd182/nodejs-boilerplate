@@ -16,7 +16,8 @@ var httpPort = config.get('port');
 // Express CONFIGURATION
 // =============================================================================
 
-app.set('port', httpPort);
+//app.set('port', httpPort);
+app.set('port', process.env.PORT || httpPort);
 app.use(bodyParser.json());
 app.use(favicon(path.join(__dirname, 'public', 'favicon.png')));
 app.use(cors());
