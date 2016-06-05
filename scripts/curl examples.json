@@ -4,7 +4,7 @@ curl -X "DELETE" http://localhost:3100/wells/571579046031bf66332739e1
 
 //status
 
-curl -H "Content-Type: application/json" -X POST -d '{"checkTime": "2014-01-01", "active": "true", "cause": "start"}' http://localhost:3100/wells/Pozo1/status/
+curl -H "Content-Type: application/json" -X POST -d '{"checkTime": "2016-06-04T22:00:00", "active": "true", "cause": "start"}' http://localhost:3100/wells/Pozo1/status/
 
 curl -H "Content-Type: application/json" -X PUT -d '{"info": "torre tanque", "enabled": true, "address": {"x":-36.776098, "y":-59.868441,"street": "Cacique Catriel", "number": "300"}, "logs": [], "rules": [{"start": "00:00", "end": "07:59"}, {"start": "16:00", "end": "23:59"}]}' http://localhost:3100/wells/Pozo1
 

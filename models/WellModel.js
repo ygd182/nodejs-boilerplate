@@ -6,7 +6,6 @@ var StatusSchema = new Schema({
 	checkTime: String,
     cause: String,
 	active: Boolean,
-	onTime: Boolean,
     isError: Boolean
  });
 
@@ -23,6 +22,7 @@ var WellSchema = new Schema({
         required: true
     },
     enabled: Boolean,
+    onTime: Boolean,
     info: String,
     address: {
         x: Number, 
@@ -47,11 +47,16 @@ WellSchema.statics.getStatusByDate = function (id, date, cb) {
 };
 
 /*
-* Excludes details information when retrieving all transfers
+* Excludes logs when retrieving all wells
 */
-WellSchema.statics.getAll = function(cb) {
+WellSchema.statics.getAllDto = function(cb) {
    this.find({}, '-_id -__v -logs').exec(cb);
 };
+
+WellSchema.statics.getAll = function(cb) {
+   this.find({}).exec(cb);
+};
+
 
 WellSchema.statics.getById = function (id, cb) {
 	this.findOne({

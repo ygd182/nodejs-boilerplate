@@ -19,7 +19,7 @@ var WellModel = require('../models/WellModel');
  *  @return {Array} all transfers array
  */
 exports.getAll = function getAll(req, res, next) {
-    WellModel.getAll(function(err, data) {
+    WellModel.getAllDto(function(err, data) {
         if (err) return res.status(400).json({error: err});
 
         res.json(data);
@@ -126,10 +126,6 @@ exports.getStatusByDate = function getStatusByDate(req, res, next) {
     });
 };
 
-function onTimestatus() {
-
-}
-
 function getHoursAndMinsFromDate(dateTime) {
     var auxDateTime = new moment(dateTime).format('HH:mm');
     return stringTimeToInt(auxDateTime);
@@ -195,7 +191,7 @@ exports.updateStatusById = function updateStatusById(req, res, next) {
         req.body.cause
         req.body.active
         req.body.checkTime*/
-        req.body.onTime = true; // si ultimo checktime-actual checktime <= 15min?
+        //req.body.onTime = true; // si ultimo checktime-actual checktime <= 15min?
         req.body.isError = isErrorStatus(data.rules, JSON.parse(req.body.active), req.body.checktime);
         data.logs.push(req.body);
         data.save(function (err, data) {
