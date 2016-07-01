@@ -18,21 +18,22 @@ function stringTimeToInt(stringTime) {
 }
 
 function updateWell(well) {
-	if(well.logs.length > 0) {
-		console.log(well.logs[0].checkTime);
-		var lastChecktime = moment(well.logs[0].checkTime);
+	if(well.log) {
+		console.log(well.log.checkTime);
+		var lastChecktime = moment(well.log.checkTime);
 		var actualTime = moment().local();
 		console.log(lastChecktime.format());
 		console.log(actualTime.format());
 		console.log(actualTime.diff(lastChecktime, 'minutes'));
 		well.onTime = actualTime.diff(lastChecktime, 'minutes') < maxMinCheck;
 		console.log(well.onTime);
-		well.save(function (err, data) {
-	        if (err) 
-	        	console.log(err);
-	    });
-
+	} else {
+		well.onTime = false;
 	}
+	well.save(function (err, data) {
+        if (err) 
+        	console.log(err);
+    });
 }
 
 

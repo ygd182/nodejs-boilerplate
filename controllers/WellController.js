@@ -194,6 +194,7 @@ exports.updateStatusById = function updateStatusById(req, res, next) {
         //req.body.onTime = true; // si ultimo checktime-actual checktime <= 15min?
         req.body.isError = isErrorStatus(data.rules, JSON.parse(req.body.active), req.body.checktime);
         data.logs.push(req.body);
+        data.log = req.body;
         data.save(function (err, data) {
             if (err) return res.status(400).json({error: err});
 

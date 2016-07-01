@@ -30,6 +30,7 @@ var WellSchema = new Schema({
         street: String,
         number: String
     },
+    log: StatusSchema,
     logs: [StatusSchema],
     rules: [RulesSchema]
 });
