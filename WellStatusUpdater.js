@@ -8,28 +8,21 @@ var maxMinCheck = 40;
 var intervalMin = 3;
 var intervalTime = 60*intervalMin*1000;
 
-function getHoursAndMinsFromDate(dateTime) {
-    var auxDateTime = new moment(dateTime).format('HH:mm');
-    return stringTimeToInt(auxDateTime);
-}
-
-function stringTimeToInt(stringTime) {
-    return _.parseInt(stringTime.replace(/:/g, ''));
-}
-
-function updateWell(well) {
+function isStatusOnTime(well) {
 	if(well.log) {
 		console.log(well.log.checkTime);
 		var lastChecktime = moment(well.log.checkTime);
 		var actualTime = moment().local();
 		console.log(lastChecktime.format());
 		console.log(actualTime.format());
-		console.log(actualTime.diff(lastChecktime, 'minutes'));
-		well.onTime = actualTime.diff(lastChecktime, 'minutes') < maxMinCheck;
-		console.log(well.onTime);
+		return actualTime.diff(lastChecktime, 'minutes') < maxMinCheck;
 	} else {
-		well.onTime = false;
+		return true;
 	}
+}
+
+function updateWell(well) {
+	well.onTime = isStatusOnTime(well);
 	well.save(function (err, data) {
         if (err) 
         	console.log(err);

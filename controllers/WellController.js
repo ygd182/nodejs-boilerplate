@@ -146,6 +146,19 @@ function isErrorStatus(rules, active, currentCheckTime) {
     var existActiveRule = existsRuleByCheckTime(rules, currentCheckTime);
     return existActiveRule != active;
 }
+
+function isStatusOnTime(well, checkTime) {
+    if(well.log) {
+        console.log(checkTime);
+        var lastChecktime = moment(checkTime);
+        var actualTime = moment().local();
+        console.log(lastChecktime.format());
+        console.log(actualTime.format());
+        return actualTime.diff(lastChecktime, 'minutes') < maxMinCheck;
+    } else {
+        return true;
+    }
+}
 /*
 si encontro tiene que ser active
 si no encontro tiene que ser non active
@@ -191,8 +204,8 @@ exports.updateStatusById = function updateStatusById(req, res, next) {
         req.body.cause
         req.body.active
         req.body.checkTime*/
-        //req.body.onTime = true; // si ultimo checktime-actual checktime <= 15min?
         req.body.isError = isErrorStatus(data.rules, JSON.parse(req.body.active), req.body.checktime);
+        data.onTime = true;
         data.logs.push(req.body);
         data.log = req.body;
         data.save(function (err, data) {
