@@ -13,3 +13,5 @@ curl -H "Content-Type: application/json" -X POST -d '{ "id": "Pozo2", "info": "P
 curl -H "Content-Type: application/json" -X POST -d '{"checkTime": "2016-06-04T22:00:00", "active": "true", "cause": "start"}' http://localhost:3100/wells/Pozo1/status/
 
 curl -H "Content-Type: application/json" -X POST -d '{"checkTime": "2016-06-04T22:00:00", "active": "true", "cause": "start"}' http://localhost:3100/wells/Pozo1/status/
+
+curl -H "Content-Type: application/json" -X POST -d '{"checkTime": "2016-06-04T22:00:00", "active": "true", "cause": "start"}' https://wells.herokuapp.com/wells/Pozo1/status/
