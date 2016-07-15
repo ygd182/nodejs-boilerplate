@@ -136,29 +136,24 @@ function stringTimeToInt(stringTime) {
 }
 
 function existsRuleByCheckTime(rules, currentCheckTime) {
-    var index =_.findIndex(rules, function findByTime(rule) {
+    var index = -1;
+    index = _.findIndex(rules, function findByTime(rule) {
         return (stringTimeToInt(rule.start) <= getHoursAndMinsFromDate(currentCheckTime) && stringTimeToInt(rule.end) >= getHoursAndMinsFromDate(currentCheckTime));
     });
+    console.log(index);
     return (-1!==index);
 }
 
 function isErrorStatus(rules, active, currentCheckTime) {
     var existActiveRule = existsRuleByCheckTime(rules, currentCheckTime);
-    return existActiveRule != active;
-}
-
-function isStatusOnTime(well, checkTime) {
-    if(well.log) {
-        console.log(checkTime);
-        var lastChecktime = moment(checkTime);
-        var actualTime = moment().local();
-        console.log(lastChecktime.format());
-        console.log(actualTime.format());
-        return actualTime.diff(lastChecktime, 'minutes') < maxMinCheck;
+    console.log(existActiveRule);
+    if(existActiveRule) {
+        return active == false; //negacion
     } else {
-        return true;
+        return active == true; 
     }
 }
+
 /*
 si encontro tiene que ser active
 si no encontro tiene que ser non active
@@ -177,7 +172,7 @@ _id: "5747a35822d56c5916954318"
 ];
 
 
-console.log('sin error'+isErrorStatus(rules, true, '2014-01-01T01:18'));
+console.log('sin error '+isErrorStatus(rules, false, '2014-01-01T10:00'));
 console.log('error'+isErrorStatus(rules, true, '2014-01-01T09:30'));
 console.log('sin error'+isErrorStatus(rules, true, '2014-01-01T16:30'));
 console.log('error'+isErrorStatus(rules, false, '2014-01-01T17:30'));*/
