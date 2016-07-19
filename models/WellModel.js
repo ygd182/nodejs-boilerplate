@@ -51,7 +51,7 @@ WellSchema.statics.getStatusByDate = function (id, date, cb) {
 * Excludes logs when retrieving all wells
 */
 WellSchema.statics.getAllDto = function(cb) {
-   this.find({}, '-_id -__v -logs').exec(cb);
+   this.find({}, '-_id -__v -logs').sort({ id: 1 }).exec(cb);
 };
 
 WellSchema.statics.getAll = function(cb) {
