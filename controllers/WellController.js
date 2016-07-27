@@ -117,7 +117,7 @@ exports.save = function save(req, res, next) {
  *  @param {Object} res response object
  *  @param {Object} next next function
  *  @returns {Object} details object
- */
+ *//*TODO fix method*/
 exports.getStatusByDate = function getStatusByDate(req, res, next) {
     WellModel.getDetailsById(req.params.id, req.params.date, function(err, data){
         if (err) return next(err);
@@ -191,7 +191,7 @@ console.log('error'+isErrorStatus(rules, false, '2014-01-01T17:30'));*/
  */
 exports.updateStatusById = function updateStatusById(req, res, next) {
     var query = {id: req.params.id};
-    WellModel.findOne(req.params.id, function(err, data){
+    WellModel.findOne(query, function(err, data){
         if (err) return res.status(400).json({error: err});
 
         //TODO validations, ontime check
