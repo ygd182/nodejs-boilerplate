@@ -35,8 +35,6 @@ var WellSchema = new Schema({
     rules: [RulesSchema]
 });
 
-/* Add search API through ES */
-WellSchema.plugin(mongoosastic);
 
 /*
  *  Get details by a given eid

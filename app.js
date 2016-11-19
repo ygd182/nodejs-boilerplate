@@ -7,6 +7,12 @@ var config = require('config');
 var path = require('path');
 var app = express();
 
+var passport        = require('passport'),
+    //passportConfig  = require('passport-config'),
+    bodyParser      = require('body-parser'),
+    session         = require('express-session');
+
+
 var mongooseConnection = require('./middleware/mongooseConnection');
 
 // get config at start time so that the app blows up as soon as possible
@@ -30,7 +36,28 @@ if (process.env.NODE_ENV !== 'test') {
 }
 
 app.use(mongooseConnection);
-app.use('/', require('./routes'));
+
+
+//===============================================================================
+//http://www.codexpedia.com/node-js/node-js-authentication-using-passport-local-strategy/
+
+ 
+// body-parser for retrieving form data
+app.use(bodyParser.json()); 
+app.use(bodyParser.urlencoded({ extended: true }));
+ 
+// initialize passposrt and and session for persistent login sessions
+app.use(session({
+    secret: "tHiSiSasEcRetStr",
+    resave: true,
+    saveUninitialized: true }));
+app.use(passport.initialize());
+app.use(passport.session());
+
+var passportConfig  = require('./middleware/passport-config')(passport);
+//=================================================================================
+
+app.use('/', require('./routes')(passport));
 
 
 // =============================================================================
@@ -40,6 +67,11 @@ app.use('/', require('./routes'));
 var dbUrl = 'mongodb://' + config.mongodb.instances[0].host + ':' + config.mongodb.instances[0].port + '/' + config.mongodb.db;
 console.log('dbUrl: ' + dbUrl)
 app.set('dbUrl', dbUrl);
+
+
+
+
+ 
 
 /////////////////////////////////////////////////////////////////////////////////
 module.exports = app;

@@ -4,7 +4,13 @@
  */
 var router = require('express').Router();
 
-// Routes are seperated into modules
-router.use('/wells', require('./wells'));
 
-module.exports = router;
+
+module.exports = function(passport){
+    // Routes are seperated into modules
+    router.use('/wells', require('./wells'));
+
+    router.use('/users', require('./users')(passport));
+
+    return router;
+};
