@@ -8,9 +8,7 @@ var path = require('path');
 var app = express();
 
 var passport        = require('passport'),
-    //passportConfig  = require('passport-config'),
-    bodyParser      = require('body-parser'),
-    session         = require('express-session');
+    bodyParser      = require('body-parser');
 
 
 var mongooseConnection = require('./middleware/mongooseConnection');
@@ -24,7 +22,11 @@ var httpPort = config.get('port');
 
 //app.set('port', httpPort);
 app.set('port', process.env.PORT || httpPort);
+
+// get our request parameters
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
 app.use(favicon(path.join(__dirname, 'public', 'favicon.png')));
 app.use(cors());
 app.use(errorHandler());
@@ -32,6 +34,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // setup logging
 if (process.env.NODE_ENV !== 'test') {
+    require('./utils/listEndpoints')('/wells', require('./routes/wells').stack);
     require('./utils/listEndpoints')('/wells', require('./routes/wells').stack);
 }
 
@@ -46,13 +49,9 @@ app.use(mongooseConnection);
 app.use(bodyParser.json()); 
 app.use(bodyParser.urlencoded({ extended: true }));
  
-// initialize passposrt and and session for persistent login sessions
-app.use(session({
-    secret: "tHiSiSasEcRetStr",
-    resave: true,
-    saveUninitialized: true }));
+// initialize passposrt
 app.use(passport.initialize());
-app.use(passport.session());
+
 
 var passportConfig  = require('./middleware/passport-config')(passport);
 //=================================================================================

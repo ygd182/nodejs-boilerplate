@@ -1,27 +1,25 @@
-//passport-config.js
-var LocalStrategy   = require('passport-local').Strategy,
-    bodyParser      = require('body-parser');
+var JwtStrategy = require('passport-jwt').Strategy;
+ 
+// load up the user model
+var UserModel = require('../models/UserModel');
 
-module.exports = function(passport){
-
-    // hardcoded users, ideally the users should be stored in a database
-    var users = [{"id":111, "username":"a", "password":"a"}];
-    // passport needs ability to serialize and unserialize users out of session
-    passport.serializeUser(function (user, done) {
-        done(null, users[0].id);
-    });
-    passport.deserializeUser(function (id, done) {
-        done(null, users[0]);
-    });
-     
-    // passport local strategy for local-login, local refers to this app
-    passport.use('local-login', new LocalStrategy(
-        function (username, password, done) {
-            if (username === users[0].username && password === users[0].password) {
-                return done(null, users[0]);
-            } else {
-                return done(null, false, {"message": "User not found."});
-            }
-        })
-    );
+var config = {secret: 'secretKey'};
+ 
+module.exports = function(passport) {
+  var opts = {};
+  opts.secretOrKey = config.secret;
+  passport.use(new JwtStrategy(opts, function(jwt_payload, done) {
+    /*console.log('config');
+    console.log(jwt_payload);*/
+    User.findOne({id: jwt_payload.id}, function(err, user) {
+          if (err) {
+              return done(err, false);
+          }
+          if (user) {
+              done(null, user);
+          } else {
+              done(null, false);
+          }
+      });
+  }));
 };

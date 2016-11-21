@@ -1,10 +1,16 @@
-var express = require('express');
-var router = express.Router();
 
-var UserController = require('../controllers/UserController')();
+
+
 
 
 module.exports = function(passport){
+    var express = require('express');
+    var router = express.Router();
+    var UserController = require('../controllers/UserController')(passport);
+
+
+    var requireAuth = passport.authenticate('jwt', { session: false });
+
     /**
      * @api {get} /wells get wells list
      * @apiName wells
@@ -41,7 +47,9 @@ module.exports = function(passport){
      * @apiSuccess {Object} result
      * @apiSuccess {String}   result.status    The well object.
      */
-    router.post('/login',passport.authenticate("local-login", { failureRedirect: "/users/login"}), UserController.login);
+    router.post('/login',/*requireAuth,*/ UserController.login);
+
+
 
     /**
      * @api {get} /wells/:id/status/:date get status by well's id
@@ -50,20 +58,10 @@ module.exports = function(passport){
      *
      * @apiSuccess {Object} result
      * @apiSuccess {String}   result.status    The status object.
-     *//*
-    router.get('/:id/status/:date', UserController.getStatusByDate);
+     */
+    router.post('/', UserController.signup);
 
-    /**
-     * @api {get} /wells/:id/status/:date get status by well's id
-     * @apiName wells
-     * @apiGroup System
-     *
-     * @apiSuccess {Object} result
-     * @apiSuccess {String}   result.status    The status object.
-     *//*
-    router.post('/:id/status/', UserController.updateStatusById);
-
-    */
+    
     return router;
 };
 /*

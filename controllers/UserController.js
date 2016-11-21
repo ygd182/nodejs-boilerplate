@@ -1,24 +1,25 @@
 //UserController.js
 'use strict';
 
+var jwt         = require('jwt-simple');
+var UserModel = require('../models/UserModel');
+
 // route middleware to ensure user is logged in
 
 
 module.exports = function(passport){
 
+var config = {secret: 'secretKey'};
     
 
     return {
 
         isLoggedIn: function isLoggedIn(req, res, next) {
+            console.log(req);
             if (req.isAuthenticated())
                 return next();
          
             res.sendStatus(401);
-        },
-     
-        hello: function hello(req, res) {
-            res.send("Hello!");
         },
          
 
@@ -27,16 +28,59 @@ module.exports = function(passport){
         },
 
         login: function login(req, res) {
-                res.redirect("/users/content");
+            /*
+             UserModel.findOne({name: req.body.name}, function(err, user) {
+                if (err) throw err;
+
+                if (!user) {
+                  res.send({success: false, msg: 'Authentication failed. User not found.'});
+                } else {
+                  // check if password matches
+                  user.comparePassword(req.body.password, function (err, isMatch) {
+                    if (isMatch && !err) {
+                      // if user is found and password is right create a token
+                      var token = jwt.encode(user, config.secret);
+                      // return the information including token as JSON
+                      res.json({success: true, token: 'JWT ' + token});
+                    } else {
+                      res.send({success: false, msg: 'Authentication failed. Wrong password.'});
+                    }
+                  });
+                }
+            });*/
+            res.redirect("/users/content");
         },
 
         getContent: function getContent(req, res) {
-            res.send("Congratulations! you've successfully logged in.");
+            res.send(req.user);
         },
 
         logout: function logout(req, res) {
             req.logout();
             res.send("logout success!");
+            /*
+            req.session.destroy(function (err) {
+                res.redirect('/'); //Inside a callback… bulletproof!
+              });
+            */
+        },
+
+        signup: function(req, res) {
+          if (!req.body.name || !req.body.password) {
+            res.json({success: false, msg: 'Please pass name and password.'});
+          } else {
+            var newUser = new UserModel({
+              name: req.body.name,
+              password: req.body.password
+            });
+            // save the user
+            newUser.save(function(err) {
+              if (err) {
+                return res.json({success: false, msg: 'Username already exists.'});
+              }
+              res.json({success: true, msg: 'Successful created new user.'});
+            });
+          }
         }
     }
 };

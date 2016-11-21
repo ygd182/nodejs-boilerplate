@@ -16,3 +16,7 @@ curl -H "Content-Type: application/json" -X POST -d '{"checkTime": "2016-06-04T2
 
 curl -H "Content-Type: application/json" -X POST -d '{"checkTime": "2016-06-04T22:00:00", "active": "true", "cause": "start"}' https://wells.herokuapp.com/wells/Pozo1/status/
 
+
+//users
+
+curl -H "Content-Type: application/json" -X POST -d '{"name": "a", "password": "a"}' http://localhost:3100/users/
