@@ -7,8 +7,7 @@ var config = require('config');
 var path = require('path');
 var app = express();
 
-var passport        = require('passport'),
-    bodyParser      = require('body-parser');
+var bodyParser      = require('body-parser');
 
 
 var mongooseConnection = require('./middleware/mongooseConnection');
@@ -50,13 +49,15 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
  
 // initialize passposrt
-app.use(passport.initialize());
 
 
-var passportConfig  = require('./middleware/passport-config')(passport);
+
+var passportConfig  = require('./middleware/passport-config')();
+app.use(passportConfig.initialize());
+
 //=================================================================================
 
-app.use('/', require('./routes')(passport));
+app.use('/', require('./routes')(passportConfig));
 
 
 // =============================================================================

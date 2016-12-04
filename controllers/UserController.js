@@ -28,8 +28,7 @@ var config = {secret: 'secretKey'};
         },
 
         login: function login(req, res) {
-            /*
-             UserModel.findOne({name: req.body.name}, function(err, user) {
+             UserModel.findOne({name: req.body.username}, function(err, user) {
                 if (err) throw err;
 
                 if (!user) {
@@ -47,12 +46,11 @@ var config = {secret: 'secretKey'};
                     }
                   });
                 }
-            });*/
-            res.redirect("/users/content");
+            });
         },
 
         getContent: function getContent(req, res) {
-            res.send(req.user);
+             res.json({success: true, message: 'You are authorized'});
         },
 
         logout: function logout(req, res) {

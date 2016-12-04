@@ -19,7 +19,7 @@ function startServer() {
 	var server = app.listen(app.get('port'), function() {
 	    console.log('Express server listening on port ' + server.address().port);
 	    var WellStatusUpdater = require('./WellStatusUpdater');
-		WellStatusUpdater.startUpdating();
+		//WellStatusUpdater.startUpdating();
 	});
 
 }

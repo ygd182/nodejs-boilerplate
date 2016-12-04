@@ -9,8 +9,6 @@ module.exports = function(passport){
     var UserController = require('../controllers/UserController')(passport);
 
 
-    var requireAuth = passport.authenticate('jwt', { session: false });
-
     /**
      * @api {get} /wells get wells list
      * @apiName wells
@@ -26,7 +24,7 @@ module.exports = function(passport){
      *       "status": "OK"
      *     }
      */
-    router.get('/content', UserController.isLoggedIn, UserController.getContent);
+    router.get('/content', passport.authenticate(), UserController.getContent);
 
     /**
      * @api {get} /wells/:id get well by id
