@@ -31,11 +31,6 @@ app.use(cors());
 app.use(errorHandler());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// setup logging
-if (process.env.NODE_ENV !== 'test') {
-    require('./utils/listEndpoints')('/wells', require('./routes/wells').stack);
-    require('./utils/listEndpoints')('/wells', require('./routes/wells').stack);
-}
 
 app.use(mongooseConnection);
 
@@ -59,6 +54,12 @@ app.use(passportConfig.initialize());
 
 app.use('/', require('./routes')(passportConfig));
 
+
+// setup logging
+if (process.env.NODE_ENV !== 'test') {
+    require('./utils/listEndpoints')('/wells', require('./routes/wells').stack);
+    require('./utils/listEndpoints')('/users', require('./routes/users')(passportConfig).stack);
+}
 
 // =============================================================================
 // db CONFIGURATION
