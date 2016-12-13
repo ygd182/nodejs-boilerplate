@@ -21,11 +21,6 @@ var config = {secret: 'secretKey'};
          
             res.sendStatus(401);
         },
-         
-
-        getLogin:function getLogin(req, res) {
-            res.send("<p>Please login!</p><form method='post' action='/users/login'><input type='text' name='username'/><input type='password' name='password'/><button type='submit' value='submit'>Submit</buttom></form>");
-        },
 
         login: function login(req, res) {
              UserModel.findOne({name: req.body.username}, function(err, user) {

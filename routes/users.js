@@ -26,16 +26,6 @@ module.exports = function(passport){
      */
     router.get('/content', passport.authenticate(), UserController.getContent);
 
-    /**
-     * @api {get} /wells/:id get well by id
-     * @apiName wells
-     * @apiGroup System
-     *
-     * @apiSuccess {Object} result
-     * @apiSuccess {String}   result.status    The well object.
-     */
-    router.get('/login', UserController.getLogin);
-
 
     /**
      * @api {post} /wells/:id get well by id
