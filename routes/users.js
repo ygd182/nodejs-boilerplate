@@ -6,7 +6,7 @@
 module.exports = function(passport){
     var express = require('express');
     var router = express.Router();
-    var UserController = require('../controllers/UserController')(passport);
+    var UserController = require('../controllers/UserController')();
 
 
     /**
@@ -35,7 +35,7 @@ module.exports = function(passport){
      * @apiSuccess {Object} result
      * @apiSuccess {String}   result.status    The well object.
      */
-    router.post('/login',/*requireAuth,*/ UserController.login);
+    router.post('/login', UserController.login);
 
 
 
