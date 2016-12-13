@@ -7,7 +7,7 @@ var UserModel = require('../models/UserModel');
 // route middleware to ensure user is logged in
 
 
-module.exports = function(passport){
+module.exports = function(){
 
 var config = {secret: 'secretKey'};
     
